@@ -49,7 +49,7 @@ export class BooksController {
         //Primero ponemos la URL y luego ponemos el objeto con los
         //parametros del crud (method, headers, body)
         //equivalente al response en crud
-        const response: Response = await fetch(`${this.domain}/api/v1/books?id=${bookId}`, reqOptions)
+        const response: Response = await fetch(`${this.domain}/api/v1/books/${bookId}`, reqOptions)
         if (!response.ok) {
             console.log(`Response body: ${(await response.json()).message}`)
             throw new Error(`HTTP error! status: ${response.status}: ${response.statusText}`)
