@@ -2,7 +2,7 @@
 
 //Interface del response o lo que nos manda tras el GET 
 //de los BOOKS
-//  Un Record es lo mismo que un string[]
+//  -- Un Record es lo mismo que un string[]
 
 export interface BodyResponseGetBooks {
     message: string,
@@ -28,8 +28,7 @@ export interface DataBook {
 //------------------------------ FIND (GET ONE BY ID) -------------------------------
 
 //Interface del response o lo que nos manda tras el GET 
-//de los BOOKS
-//  Un Record es lo mismo que un string[]
+//de un BOOK en particular
 
 export interface BodyResponseGetBookById {
     message: string,
@@ -54,7 +53,10 @@ export interface BodyResponseCreateBooks {
 }
 
 //------------------------------ DELETE ---------------------------------------------
-
+export interface BodyResponseDeleteBooks {
+    message: string,
+    data: null
+}
 
 //------------------------------ UPDATE (PATCH) ---------------------------------------
 export interface BodyRequestUpdateBooks {
