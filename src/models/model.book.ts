@@ -11,16 +11,17 @@ export interface BodyResponseGetBooks {
 
 //Interface para la data que trae el response de nuestro GET ALL BOOKS
 export interface DataBook {
+    id: string,
     title: string,
     author: string,
     description: string,
     summary: string,
-    publicationDate: Date,
+    publicationDate: string,
     createdBy: string,
     updatedBy: null,
     deletedBy: null,
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt: string,
+    updatedAt: string,
     deletedAt: null,
     files: any[]
 }
@@ -30,7 +31,7 @@ export interface DataBook {
 //Interface del response o lo que nos manda tras el GET 
 //de un BOOK en particular
 
-export interface BodyResponseGetBookById {
+export interface BodyResponseGetById {
     message: string,
     data: DataBook[]
 }
@@ -43,7 +44,7 @@ export interface BodyRequestCreateBooks {
     author: string,
     description: string,
     summary: string,
-    publicationDate: Date
+    publicationDate: string
 }
 
 //Interface del response o lo que nos responden al crear los BOOKS
@@ -64,7 +65,7 @@ export interface BodyRequestUpdateBooks {
     author: string,
     description: string,
     summary: string,
-    publicationDate: Date
+    publicationDate: string
 }
 export interface BodyResponseUpdateBooks { 
     message: string,
