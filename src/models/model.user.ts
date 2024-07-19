@@ -8,11 +8,10 @@ export interface BodyRequestLogin {
 
 //Interface del response o lo que nos responde tras la request 
 //en el LOGIN
-//  Un Record es lo mismo que un string[]
+//  -- Un Record es lo mismo que un string[]
 
 export interface BodyResponseLogin {
     message: string,
     data: Record <string, string>
 }
-
 
