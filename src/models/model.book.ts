@@ -56,6 +56,16 @@ export interface BodyResponseCreateBooks {
 //------------------------------ DELETE ---------------------------------------------
 
 
-//------------------------------ UPDATE (PUT) ---------------------------------------
-
+//------------------------------ UPDATE (PATCH) ---------------------------------------
+export interface BodyRequestUpdateBooks {
+    title: string,
+    author: string,
+    description: string,
+    summary: string,
+    publicationDate: Date
+}
+export interface BodyResponseUpdateBooks { 
+    message: string,
+    data: Record<string, string>
+}
 
