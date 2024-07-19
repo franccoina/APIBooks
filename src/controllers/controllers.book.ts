@@ -1,4 +1,4 @@
-import { BodyResponseGetBooks, BodyRequestCreateBooks, BodyResponseCreateBooks } from './../models/model.book';
+import { BodyResponseGetBooks, BodyResponseGetBookById, BodyRequestCreateBooks, BodyResponseCreateBooks } from './../models/model.book';
 
 export class BooksController {
     public domain: string
@@ -34,7 +34,7 @@ export class BooksController {
     }
 
     //------------------------------------------- FIND (GET ONE BY ID) -----------------------------------------------------
-    async findBookById(token: string, bookId: number): Promise<BodyResponseGetBooks> {
+    async findBookById(token: string, bookId: number): Promise<BodyResponseGetBookById> {
         // se crean los headers con el token para que la API pueda identificar el usuario.
         const headers: Record<string, string> = {
             //La API dice que los Headers (-H), deben ser estos, y ahora debemos de enviar el token para
@@ -54,8 +54,8 @@ export class BooksController {
             console.log(`Response body: ${(await response.json()).message}`)
             throw new Error(`HTTP error! status: ${response.status}: ${response.statusText}`)
         }
-        const responseBodyGetBooks: BodyResponseGetBooks = await response.json()
-        return responseBodyGetBooks
+        const responseBodyGetBookById: BodyResponseGetBookById = await response.json()
+        return responseBodyGetBookById
     }
 
     //------------------------------------------- CREATE (POST) -------------------------------------------
