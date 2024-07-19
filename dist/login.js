@@ -9,16 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const controllers_user_js_1 = require("./controllers/controllers.user.js"); // se importa la clase 'CrudUsers'.
-const URL_USERS = 'http://190.147.64.47:5155'; // variable con la URL de la API.
+const controllers_user_js_1 = require("./controllers/controllers.user.js"); // se importa la clase 'UsersController'.
+const URL_DOMAIN = 'http://190.147.64.47:5155'; // variable con la URL de la API.
 // se definen los selectores del formulario para obtener los valores. 
 const form = document.querySelector('form');
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 form.addEventListener('submit', (event) => __awaiter(void 0, void 0, void 0, function* () {
     event.preventDefault();
-    const crudUsers = new controllers_user_js_1.UsersController(URL_USERS); // se instancia la clase.
-    const response = yield crudUsers.login(email, password); // se emplea el método 'login' de la clase y se le dan los parámetros de entrada requeridos.
+    const usersController = new controllers_user_js_1.UsersController(URL_DOMAIN); // se instancia la clase.
+    const response = yield usersController.login(email, password); // se emplea el método 'login' de la clase y se le dan los parámetros de entrada requeridos.
     const token = response.data.token; // la variable accede al token que se encuentra en la respuesta una vez el usuario administrador inicia sesión. 
     if (token) {
         console.log('Login was successful.');

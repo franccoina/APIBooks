@@ -15,7 +15,7 @@ class BooksController {
         this.domain = domain;
     }
     //------------------------------------------- GET ALL -----------------------------------------------------
-    getAllBooks(token, limit, page) {
+    getAllBooks(token, limit, currentPage) {
         return __awaiter(this, void 0, void 0, function* () {
             // se crean los headers con el token para que la API pueda identificar el usuario.
             const headers = {
@@ -31,7 +31,7 @@ class BooksController {
             //Primero ponemos la URL y luego ponemos el objeto con los
             //parametros del crud (method, headers, body)
             //equivalente al response en crud
-            const response = yield fetch(`${this.domain}/api/v1/books?limit=${limit}&page=${page}`, reqOptions);
+            const response = yield fetch(`${this.domain}/api/v1/books?limit=${limit}&page=${currentPage}`, reqOptions);
             if (!response.ok) {
                 console.log(`Response body: ${(yield response.json()).message}`);
                 throw new Error(`HTTP error! status: ${response.status}: ${response.statusText}`);
@@ -57,13 +57,13 @@ class BooksController {
             //Primero ponemos la URL y luego ponemos el objeto con los
             //parametros del crud (method, headers, body)
             //equivalente al response en crud
-            const response = yield fetch(`${this.domain}/api/v1/books?id=${bookId}`, reqOptions);
+            const response = yield fetch(`${this.domain}/api/v1/books/${bookId}`, reqOptions);
             if (!response.ok) {
                 console.log(`Response body: ${(yield response.json()).message}`);
                 throw new Error(`HTTP error! status: ${response.status}: ${response.statusText}`);
             }
-            const responseBodyGetBooks = yield response.json();
-            return responseBodyGetBooks;
+            const responseBodyGetById = yield response.json();
+            return responseBodyGetById;
         });
     }
     //------------------------------------------- CREATE (POST) -------------------------------------------
@@ -76,7 +76,7 @@ class BooksController {
                 author: author.value,
                 description: description.value,
                 summary: summary.value,
-                publicationDate: new Date(publicationDate.value)
+                publicationDate: publicationDate.value
             };
             const headers = {
                 //La API dice que los Headers (-H), deben ser estos, y ahora debemos de enviar el token para
@@ -106,55 +106,43 @@ class BooksController {
         });
     }
     //------------------------------------------- DELETE -------------------------------------------
-    delete(token, title, author, description, summary, publicationDate) {
+    delete(token, bookId) {
         return __awaiter(this, void 0, void 0, function* () {
-            // se crea un objeto con los datos del libro que se quiere crear.
-            //equivalente al request en crud
-            const newBookData = {
-                title: title.value,
-                author: author.value,
-                description: description.value,
-                summary: summary.value,
-                publicationDate: new Date(publicationDate.value)
-            };
+            // se crean los headers con el token para que la API pueda identificar el usuario.
             const headers = {
                 //La API dice que los Headers (-H), deben ser estos, y ahora debemos de enviar el token para
                 //que sea admisible. Es como un 'codigo de administrador' para que la API pueda identificar el usuario
                 'accept': '*/*',
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             };
             const reqOptions = {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(newBookData)
+                method: 'DELETE',
+                headers: headers
             };
             //Primero ponemos la URL y luego ponemos el objeto con los
             //parametros del crud (method, headers, body)
             //equivalente al response en crud
-            const response = yield fetch(`${this.domain}/api/v1/books`, reqOptions);
-            //Capturamos el ERROR en caso de que la respuesta no tenga el atributo OK en 'true' (es decir, un 200)
+            const response = yield fetch(`${this.domain}/api/v1/books/${bookId}`, reqOptions);
             if (!response.ok) {
                 console.log(`Response body: ${(yield response.json()).message}`);
                 throw new Error(`HTTP error! status: ${response.status}: ${response.statusText}`);
             }
-            // se obtiene la información esperada por la API y se transforma a código...
-            //equivalente a la data en crud
-            const responseBodyCreateBooks = yield response.json();
-            return responseBodyCreateBooks;
+            const responseBodyDeleteBook = yield response.json();
+            return responseBodyDeleteBook;
         });
     }
-    //------------------------------------------- UPDATE (PUT) -------------------------------------------
-    update(token, title, author, description, summary, publicationDate) {
+    //------------------------------------------- UPDATE (PATCH) -------------------------------------------
+    //En este caso se prefiere usar PATCH en vez del metodo PUT, debido a mayor facilidad y un uso mas directo
+    update(token, bookId, title, author, description, summary, publicationDate) {
         return __awaiter(this, void 0, void 0, function* () {
             // se crea un objeto con los datos del libro que se quiere crear.
             //equivalente al request en crud
-            const newBookData = {
+            const updatedBookData = {
                 title: title.value,
                 author: author.value,
                 description: description.value,
                 summary: summary.value,
-                publicationDate: new Date(publicationDate.value)
+                publicationDate: publicationDate.value
             };
             const headers = {
                 //La API dice que los Headers (-H), deben ser estos, y ahora debemos de enviar el token para
@@ -164,14 +152,14 @@ class BooksController {
                 'Authorization': `Bearer ${token}`
             };
             const reqOptions = {
-                method: 'POST',
+                method: 'PATCH',
                 headers: headers,
-                body: JSON.stringify(newBookData)
+                body: JSON.stringify(updatedBookData)
             };
             //Primero ponemos la URL y luego ponemos el objeto con los
             //parametros del crud (method, headers, body)
             //equivalente al response en crud
-            const response = yield fetch(`${this.domain}/api/v1/books`, reqOptions);
+            const response = yield fetch(`${this.domain}/api/v1/books/${bookId}`, reqOptions);
             //Capturamos el ERROR en caso de que la respuesta no tenga el atributo OK en 'true' (es decir, un 200)
             if (!response.ok) {
                 console.log(`Response body: ${(yield response.json()).message}`);
@@ -179,8 +167,8 @@ class BooksController {
             }
             // se obtiene la información esperada por la API y se transforma a código...
             //equivalente a la data en crud
-            const responseBodyCreateBooks = yield response.json();
-            return responseBodyCreateBooks;
+            const responseBodyUpdateBooks = yield response.json();
+            return responseBodyUpdateBooks;
         });
     }
 }
