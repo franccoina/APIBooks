@@ -3,7 +3,6 @@ import { UsersController } from "./controllers/controllers.user.js"; // se impor
 const URL_USERS: string = 'http://190.147.64.47:5155'; // variable con la URL de la API.
 
 // se definen los selectores del formulario para obtener los valores. 
-
 const form = document.querySelector('form') as HTMLFormElement;
 const email = document.querySelector('#email') as HTMLInputElement;
 const password = document.querySelector('#password') as HTMLInputElement;
