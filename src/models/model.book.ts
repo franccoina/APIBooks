@@ -1,4 +1,4 @@
-//------------------------------ GET ------------------------------
+//------------------------------ GET -------------------------------------------------
 
 //Interface del response o lo que nos manda tras el GET 
 //de los BOOKS
@@ -25,7 +25,7 @@ export interface DataBook {
     files: any[]
 }
 
-//------------------------------ FIND (GET ONE BY ID) ------------------------------
+//------------------------------ FIND (GET ONE BY ID) -------------------------------
 
 //Interface del response o lo que nos manda tras el GET 
 //de los BOOKS
@@ -36,12 +36,26 @@ export interface BodyResponseGetBookById {
     data: DataBook[]
 }
 
-//------------------------------ CREATE (POST) ------------------------------
+//------------------------------ CREATE (POST) --------------------------------------
+
+//Interface del request o lo que enviamos al crear los BOOKS
+export interface BodyRequestCreateBooks {
+    title: string,
+    author: string,
+    description: string,
+    summary: string,
+    publicationDate: Date
+}
+
+//Interface del response o lo que nos responden al crear los BOOKS
+export interface BodyResponseCreateBooks {
+    message: string,
+    data: Record<string, string>
+}
+
+//------------------------------ DELETE ---------------------------------------------
 
 
-//------------------------------ DELETE ------------------------------
-
-
-//------------------------------ UPDATE (PUT) ------------------------------
+//------------------------------ UPDATE (PUT) ---------------------------------------
 
 
