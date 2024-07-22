@@ -20,8 +20,8 @@ export interface DataBook {
     createdBy: string,
     updatedBy: null,
     deletedBy: null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: Date,
+    updatedAt: Date,
     deletedAt: null,
     files: any[]
 }
@@ -33,7 +33,7 @@ export interface DataBook {
 
 export interface BodyResponseGetById {
     message: string,
-    data: DataBook[]
+    data: Record<string, string>;
 }
 
 //------------------------------ CREATE (POST) --------------------------------------
