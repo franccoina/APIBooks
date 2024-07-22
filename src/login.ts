@@ -8,8 +8,8 @@ const form = document.querySelector('form') as HTMLFormElement;
 const email = document.querySelector('#email') as HTMLInputElement;
 const password = document.querySelector('#password') as HTMLInputElement;
 
-form.addEventListener('submit', async (event: Event) => {
-    event.preventDefault();
+form.addEventListener('submit', async (ev: Event) => {
+    ev.preventDefault();
 
     const usersController = new UsersController(URL_DOMAIN); // se instancia la clase.
     const response = await usersController.login(email, password); // se emplea el método 'login' de la clase y se le dan los parámetros de entrada requeridos.
@@ -27,3 +27,18 @@ form.addEventListener('submit', async (event: Event) => {
 
     form.reset();
 })
+
+
+//----------------------------------------- AUTH CREDENTIALS -----------------------------------------
+
+//ADMIN
+// {
+//     "email": "prueba@prueba.pru",
+//     "password": "C0ntr4S3gu++r4"
+// }
+
+//USER
+// {
+//     "email": "bill@gates.riwi",
+//     "password": "abcd1234"
+// }
