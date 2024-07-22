@@ -21,7 +21,7 @@
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="15days">
-    <title>Booklister | Book Management</title>
+    <title>Booklister | Users Management</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
@@ -48,7 +48,7 @@
                         <a class="nav-link" href="./books.html">Books</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./books.html#contact">Contact</a>
+                        <a class="nav-link" href="./home.html#contact">Contact</a>
                     </li>
                 </ul>
                 <button type="button" class="btn btn-light" id="btn-logout">Logout</button>
@@ -56,47 +56,51 @@
         </nav>
     </header>
     <main class="container">
-        <h1 class="text-center pt-5">Form</h1>
-        <!-- Form for managing Books Cards information when Updating or Creating -->
-        <form class="text-center pt-4 mb-5">
-            <div class="form-group py-2 text-start">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" aria-describedby="title" placeholder="Title">
-            </div>
-            <div class="form-group py-2 text-start">
-                <label for="author">Author</label>
-                <input type="title" class="form-control" id="author" aria-describedby="author" placeholder="Author">
-            </div>
-            <div class="form-group py-2 text-start">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" aria-describedby="description"
-                    placeholder="Description">
-            </div>
-            <div class="form-group py-2 text-start">
-                <label for="summary">Summary</label>
-                <input type="text" class="form-control" id="summary" aria-describedby="summary" placeholder="Summary">
-            </div>
-            <div class="form-group py-2 text-start">
-                <label for="publication-date">Publication Date</label>
-                <input type="text" class="form-control" id="publication-date" aria-describedby="publication-date"
-                    placeholder="Publication Date">
-            </div>
-            <button type="submit" id="btn-submit" class="mt-4 btn btn-outline-success">
-                Save
-            </button>
-        </form>
-        <hr>
-        <section class="text-center pt-5">
-            <h1>Books</h1>
-            <!-- Books Cards container -->
-            <div class="container" id="cardsContainer">
-
-            </div>
-            <!-- Paging buttons -->
-            <div class="d-flex justify-content-center gap-5 my-3 flex-wrap"></div>
-            <div id="paging">
-                <button type="button" class="btn btn-outline-secondary" id="prev-page">Previous</button>
-                <button type="button" class="ms-2 btn btn-outline-secondary" id="next-page">Next</button>
+        <h1 class="text-center pt-5">Welcome, to Booklister!</h1>
+        <!-- Services section -->
+        <section id="services" class="py-5 px-2 bg-light mt-5 rounded">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="text-dark">Our Services</h2>
+                    <p class="lead">Discover what you can do at Booklister...</p>
+                </div>
+                <div class="row">
+                    <!-- Service 1: CRUD for Books by Administrator -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">Book Management</h4>
+                                <p class="card-text">The administrator can perform the following actions:</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">🚩 Create new books</li>
+                                    <li class="list-group-item">🚩 View the complete list of books</li>
+                                    <li class="list-group-item">🚩 Update information of existing books</li>
+                                    <li class="list-group-item">🚩 Delete books from the database</li>
+                                </ul>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="./books.html" class="btn btn-outline-secondary btn-block">Access Book Management</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Service 2: User Management -->
+                    <div class="col-lg-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">User Management</h4>
+                                <p class="card-text">The administrator can assign roles to users:</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">🚩 Create new users</li>
+                                    <li class="list-group-item">🚩 View list of registered users</li>
+                                    <li class="list-group-item">🚩 Grant user or administrator permissions</li>
+                                </ul>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <a href="./users.html" class="btn btn-outline-secondary btn-block">Access User Management</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -126,7 +130,7 @@
         </div>
     </footer>
     <!-- Script module for JS/TS -->
-    <script type="module" src="../books.js"></script>
+    <script type="module" src="../users.js"></script>
 </body>
 
 </html>

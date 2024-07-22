@@ -64,9 +64,9 @@ export class BooksController {
         });
     }
     //------------------------------------------- CREATE (POST) -------------------------------------------
-    create(token, title, author, description, summary, publicationDate) {
+    createBook(token, title, author, description, summary, publicationDate) {
         return __awaiter(this, void 0, void 0, function* () {
-            // se crea un objeto con los datos del libro que se quiere crear.
+            // se crea un objeto con los datos del BOOK que se quiere crear.
             //equivalente al request en crud
             const newBookData = {
                 title: title.value,
@@ -103,7 +103,7 @@ export class BooksController {
         });
     }
     //------------------------------------------- DELETE -------------------------------------------
-    delete(token, bookId) {
+    deleteBook(token, bookId) {
         return __awaiter(this, void 0, void 0, function* () {
             // se crean los headers con el token para que la API pueda identificar el usuario.
             const headers = {
@@ -129,10 +129,11 @@ export class BooksController {
         });
     }
     //------------------------------------------- UPDATE (PATCH) -------------------------------------------
-    //En este caso se prefiere usar PATCH en vez del metodo PUT, debido a mayor facilidad y un uso mas directo
-    update(token, bookId, title, author, description, summary, publicationDate) {
+    //En este caso se prefiere usar PATCH en vez del metodo PUT, debido a mayor facilidad, un uso mas directo
+    //y requerimientos de la API
+    updateBook(token, bookId, title, author, description, summary, publicationDate) {
         return __awaiter(this, void 0, void 0, function* () {
-            // se crea un objeto con los datos del libro que se quiere crear.
+            // se crea un objeto con los datos del BOOK que se quieren actualizar.
             //equivalente al request en crud
             const updatedBookData = {
                 title: title.value,

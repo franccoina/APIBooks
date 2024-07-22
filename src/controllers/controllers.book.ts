@@ -65,9 +65,9 @@ export class BooksController {
 
     //------------------------------------------- CREATE (POST) -------------------------------------------
 
-    async create(token: string, title: HTMLInputElement, author: HTMLInputElement, description: HTMLInputElement,
+    async createBook(token: string, title: HTMLInputElement, author: HTMLInputElement, description: HTMLInputElement,
         summary: HTMLInputElement, publicationDate: HTMLInputElement): Promise<BodyResponseCreateBooks> {
-        // se crea un objeto con los datos del libro que se quiere crear.
+        // se crea un objeto con los datos del BOOK que se quiere crear.
         //equivalente al request en crud
         const newBookData: BodyRequestCreateBooks = {
             title: title.value,
@@ -108,7 +108,7 @@ export class BooksController {
 
     //------------------------------------------- DELETE -------------------------------------------
 
-    async delete(token: string, bookId: string): Promise<BodyResponseDeleteBooks> {
+    async deleteBook(token: string, bookId: string): Promise<BodyResponseDeleteBooks> {
         // se crean los headers con el token para que la API pueda identificar el usuario.
         const headers: Record<string, string> = {
             //La API dice que los Headers (-H), deben ser estos, y ahora debemos de enviar el token para
@@ -135,10 +135,12 @@ export class BooksController {
 
     //------------------------------------------- UPDATE (PATCH) -------------------------------------------
     
-    //En este caso se prefiere usar PATCH en vez del metodo PUT, debido a mayor facilidad y un uso mas directo
-    async update(token: string, bookId: string, title: HTMLInputElement, author: HTMLInputElement, description: HTMLInputElement,
+    //En este caso se prefiere usar PATCH en vez del metodo PUT, debido a mayor facilidad, un uso mas directo
+    //y requerimientos de la API
+    async updateBook(token: string, bookId: string, title: HTMLInputElement, author: HTMLInputElement, description: HTMLInputElement,
         summary: HTMLInputElement, publicationDate: HTMLInputElement): Promise<BodyResponseUpdateBooks> {
-        // se crea un objeto con los datos del libro que se quiere crear.
+        // se crea un objeto con los datos del BOOK que se quieren actualizar.
+        
         //equivalente al request en crud
         const updatedBookData: BodyRequestUpdateBooks = {
             title: title.value,

@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { BooksController } from "./controllers/controllers.book.js"; // se importa la clase 'BooksController'.
+import { UsersController } from "./controllers/controllers.user.js"; // se importa la clase 'UserController'.
 import { TemplateController } from "./controllers/controllers.template.js"; // se importa la clase 'TemplateController'.
 const URL_DOMAIN = 'http://190.147.64.47:5155'; // variable con la URL de la API.
 const prevPage = document.querySelector("#prev-page");
@@ -24,77 +24,70 @@ else {
     // se definen los selectores del formulario y el contenedor de las cards para obtener los valores. 
     const cardsContainer = document.querySelector('#cardsContainer');
     const form = document.querySelector('form');
-    const title = document.querySelector('#title');
-    const author = document.querySelector('#author');
-    const description = document.querySelector('#description');
-    const summary = document.querySelector('#summary');
-    const publicationDate = document.querySelector('#publication-date');
-    let bookId;
+    const name = document.querySelector('#name');
+    const lastName = document.querySelector('#lastname');
+    const email = document.querySelector('#email');
+    const password = document.querySelector('#password');
+    let role;
+    let userId;
     const cardTemplate = new TemplateController(cardsContainer);
     prevPage.addEventListener("click", (ev) => __awaiter(void 0, void 0, void 0, function* () {
         if (currentPage > 1) {
             currentPage--;
-            yield allBooks(limit, currentPage);
+            yield allUsers(limit, currentPage);
         }
     }));
     nextPage.addEventListener("click", (ev) => __awaiter(void 0, void 0, void 0, function* () {
         if (currentPage >= 1) {
             currentPage++;
-            yield allBooks(limit, currentPage);
+            yield allUsers(limit, currentPage);
         }
     }));
     form.addEventListener("submit", (ev) => __awaiter(void 0, void 0, void 0, function* () {
         ev.preventDefault();
-        const booksController = new BooksController(URL_DOMAIN);
-        if (bookId === undefined) {
-            yield booksController.createBook(token, title, author, description, summary, publicationDate);
-        }
-        else {
-            yield booksController.updateBook(token, bookId, title, author, description, summary, publicationDate);
-            bookId = undefined;
-            form.reset();
+        const booksController = new UsersController(URL_DOMAIN);
+        if (userId === undefined) {
+            yield booksController.createUser(token, name, lastName, email, password);
         }
         form.reset();
-        yield allBooks(limit, currentPage);
+        yield allUsers(limit, currentPage);
     }));
     cardsContainer.addEventListener("click", (ev) => __awaiter(void 0, void 0, void 0, function* () {
-        if (ev.target instanceof HTMLButtonElement) {
-            const booksController = new BooksController(URL_DOMAIN);
-            if (ev.target.classList.contains("btn-update")) {
-                bookId = ev.target.dataset.id;
-                // Para rellenar el formulario con los datos del book seleccionado
-                if (bookId) {
-                    const foundBook = yield booksController.findBookById(token, bookId);
-                    title.value = foundBook.data.title;
-                    author.value = foundBook.data.author;
-                    description.value = foundBook.data.description;
-                    summary.value = foundBook.data.summary;
-                    publicationDate.value = foundBook.data.publicationDate;
+        if (ev.target instanceof HTMLInputElement && ev.target.type === 'checkbox') {
+            const usersController = new UsersController(URL_DOMAIN);
+            const checkbox = ev.target;
+            form.reset();
+            if (checkbox.checked) {
+                userId = ev.target.dataset.id;
+                // Para cambiar el role del usuario a 'admin'
+                if (userId) {
+                    role = 'admin';
+                    yield usersController.updateUserRole(token, userId, role);
+                    userId = undefined;
                 }
             }
-            else if (ev.target.classList.contains("btn-delete")) {
-                let bookId = ev.target.dataset.id;
-                if (bookId) {
-                    const confirmDelete = confirm("Are you sure you want to delete?");
-                    if (confirmDelete) {
-                        yield booksController.deleteBook(token, bookId);
-                        bookId = undefined;
-                        yield allBooks(limit, currentPage);
-                    }
+            else {
+                userId = ev.target.dataset.id;
+                // Para cambiar el role del usuario a 'user'
+                if (userId) {
+                    role = 'user';
+                    yield usersController.updateUserRole(token, userId, role);
+                    userId = undefined;
                 }
             }
         }
+        yield allUsers(limit, currentPage);
     }));
     //--------------------------------------------- RENDER ---------------------------------------------
-    function allBooks(limit, currentPage) {
+    function allUsers(limit, currentPage) {
         return __awaiter(this, void 0, void 0, function* () {
-            const booksController = new BooksController(URL_DOMAIN);
+            const usersController = new UsersController(URL_DOMAIN);
             try {
-                const response = yield booksController.getAllBooks(token, limit, currentPage);
-                const books = response.data;
+                const response = yield usersController.getAllUsers(token, limit, currentPage);
+                const users = response.data;
                 cardsContainer.innerHTML = '';
-                for (const book of books) {
-                    cardTemplate.renderBooks(book.id, book.title, book.author, book.description, book.summary, book.publicationDate);
+                for (const user of users) {
+                    cardTemplate.renderUsers(user.id, user.name, user.lastName, user.email, user.role);
                 }
             }
             catch (error) {
@@ -102,7 +95,7 @@ else {
             }
         });
     }
-    allBooks(limit, currentPage);
+    allUsers(limit, currentPage);
 }
 //------------------------------------------------- addEventListener para el LOGOUT -------------------------------------------------
 const btnLogout = document.querySelector('#btn-logout');

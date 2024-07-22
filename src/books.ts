@@ -51,9 +51,9 @@ if (!token) {
         const booksController = new BooksController(URL_DOMAIN);
 
         if (bookId === undefined) {
-            await booksController.create(token, title, author, description, summary, publicationDate);
+            await booksController.createBook(token, title, author, description, summary, publicationDate);
         } else {
-            await booksController.update(token, bookId, title, author, description, summary, publicationDate);
+            await booksController.updateBook(token, bookId, title, author, description, summary, publicationDate);
             bookId = undefined;
             form.reset()
         }
@@ -83,7 +83,7 @@ if (!token) {
                 if (bookId) {
                     const confirmDelete = confirm("Are you sure you want to delete?");
                     if (confirmDelete) {
-                        await booksController.delete(token, bookId);
+                        await booksController.deleteBook(token, bookId);
                         bookId = undefined;
                         await allBooks(limit, currentPage);
                     }
@@ -103,7 +103,7 @@ if (!token) {
             cardsContainer.innerHTML = '';
 
             for (const book of books) {
-                cardTemplate.render(book.id, book.title, book.author, book.description, book.summary, book.publicationDate);
+                cardTemplate.renderBooks(book.id, book.title, book.author, book.description, book.summary, book.publicationDate);
             }
         } catch (error) {
             console.error(`Error fetching books:`, error);
