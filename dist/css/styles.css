@@ -8,13 +8,19 @@
 }
 
 html{
-    width: 100% !important;
-    height: 100% !important;
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    height: inherit !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
 }
 
 footer{
-    position: absolute !important;
-    bottom: 0 !important;
+    align-self: flex-end;
 }
 
 ul{

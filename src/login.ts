@@ -15,11 +15,13 @@ form.addEventListener('submit', async (ev: Event) => {
     const response = await usersController.login(email, password); // se emplea el método 'login' de la clase y se le dan los parámetros de entrada requeridos.
 
     const token: string | null = response.data.token; // la variable accede al token que se encuentra en la respuesta una vez el usuario administrador inicia sesión. 
+    const role: string | null = response.data.role; // la variable accede al role que se encuentra en la respuesta una vez el usuario administrador inicia sesión. 
 
     if (token) {
         console.log('Login was successful.');
         localStorage.setItem('authToken', token); // 'authToken - 'token' -> clave - valor para guardar el token en Local Storage.
-        window.location.href = './pages/books.html' // redirige a la página donde se encuentran los libros una vez el usuario inicia sesión.
+        window.location.href = './pages/home.html' // redirige a la página donde se encuentran los libros una vez el usuario inicia sesión.
+        localStorage.setItem('authRole', role);
     }
     else {
         console.log('Login failed.');
