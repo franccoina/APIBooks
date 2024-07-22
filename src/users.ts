@@ -13,99 +13,155 @@ const limit: number = 6;
 //------------------------------------------------- BOOKS cards & crud -------------------------------------------------
 
 const token = localStorage.getItem('authToken') as string; // se obtiene el token de localStorage.
+const role = localStorage.getItem('authRole') as string; // se obtiene el role de localStorage.
 
 if (!token) {
     alert('Authentication token is missing. Please log in...');
     window.location.href = '../index.html';
 } else {
-    // se definen los selectores del formulario y el contenedor de las cards para obtener los valores. 
-    const cardsContainer = document.querySelector('#cardsContainer') as HTMLDivElement;
-
-    const form = document.querySelector('form') as HTMLFormElement;
-    const name = document.querySelector('#name') as HTMLInputElement;
-    const lastName = document.querySelector('#lastname') as HTMLInputElement;
-    const email = document.querySelector('#email') as HTMLInputElement;
-    const password = document.querySelector('#password') as HTMLInputElement;
-
-    let role: string;
-
-    let userId: undefined | string;
-
-    const cardTemplate = new TemplateController(cardsContainer);
-
-    prevPage.addEventListener("click", async (ev: Event) => {
-        if (currentPage > 1) {
-            currentPage--;
+    if (role == 'admin') {
+        // se definen los selectores del formulario y el contenedor de las cards para obtener los valores. 
+        const cardsContainer = document.querySelector('#cardsContainer') as HTMLDivElement;
+    
+        const form = document.querySelector('form') as HTMLFormElement;
+        const name = document.querySelector('#name') as HTMLInputElement;
+        const lastName = document.querySelector('#lastname') as HTMLInputElement;
+        const email = document.querySelector('#email') as HTMLInputElement;
+        const password = document.querySelector('#password') as HTMLInputElement;
+    
+        let role: string;
+    
+        let userId: undefined | string;
+    
+        const cardTemplate = new TemplateController(cardsContainer);
+    
+        prevPage.addEventListener("click", async (ev: Event) => {
+            if (currentPage > 1) {
+                currentPage--;
+                await allUsers(limit, currentPage);
+            }
+        });
+    
+        nextPage.addEventListener("click", async (ev: Event) => {
+            if (currentPage >=1){
+                currentPage++;
+                await allUsers(limit, currentPage);
+            }
+        });
+    
+        form.addEventListener("submit", async (ev: Event) => {
+            ev.preventDefault();
+            const booksController = new UsersController(URL_DOMAIN);
+    
+            if (userId === undefined) {
+                await booksController.createUser(token, name, lastName, email, password);
+            }
+    
+            form.reset();
             await allUsers(limit, currentPage);
-        }
-    });
-
-    nextPage.addEventListener("click", async (ev: Event) => {
-        if (currentPage >=1){
-            currentPage++;
-            await allUsers(limit, currentPage);
-        }
-    });
-
-    form.addEventListener("submit", async (ev: Event) => {
-        ev.preventDefault();
-        const booksController = new UsersController(URL_DOMAIN);
-
-        if (userId === undefined) {
-            await booksController.createUser(token, name, lastName, email, password);
-        }
-
-        form.reset();
-        await allUsers(limit, currentPage);
-    });
-
-    cardsContainer.addEventListener("click", async (ev: Event) => {
-        if (ev.target instanceof HTMLInputElement && ev.target.type === 'checkbox') {
+        });
+    
+        cardsContainer.addEventListener("click", async (ev: Event) => {
+            if (ev.target instanceof HTMLInputElement && ev.target.type === 'checkbox') {
+                const usersController = new UsersController(URL_DOMAIN);
+                const checkbox = ev.target as HTMLInputElement;
+                
+                form.reset()
+    
+                if (checkbox.checked) {
+                    userId = ev.target.dataset.id;
+                    // Para cambiar el role del usuario a 'admin'
+                    if (userId) {
+                        role = 'admin';
+                        await usersController.updateUserRole(token, userId, role);
+                        userId = undefined;
+                    }
+                } else {
+                    userId = ev.target.dataset.id;
+                    // Para cambiar el role del usuario a 'user'
+                    if (userId) {
+                        role = 'user';
+                        await usersController.updateUserRole(token, userId, role);
+                        userId = undefined;
+                    }
+                }
+            }
+            await allUsers(limit, currentPage)
+        });
+    
+        //--------------------------------------------- RENDER ---------------------------------------------
+    
+        async function allUsers(limit: number, currentPage: number) {
             const usersController = new UsersController(URL_DOMAIN);
-            const checkbox = ev.target as HTMLInputElement;
-            
-            form.reset()
-
-            if (checkbox.checked) {
-                userId = ev.target.dataset.id;
-                // Para cambiar el role del usuario a 'admin'
-                if (userId) {
-                    role = 'admin';
-                    await usersController.updateUserRole(token, userId, role);
-                    userId = undefined;
+            try {
+                const response: BodyResponseGetUsers = await usersController.getAllUsers(token, limit, currentPage);
+                const users: DataUser[] = response.data;
+    
+                cardsContainer.innerHTML = '';
+    
+                for (const user of users) {
+                    cardTemplate.renderUsers(user.id, user.name, user.lastName, user.email, user.role);
                 }
-            } else {
-                userId = ev.target.dataset.id;
-                // Para cambiar el role del usuario a 'user'
-                if (userId) {
-                    role = 'user';
-                    await usersController.updateUserRole(token, userId, role);
-                    userId = undefined;
-                }
+            } catch (error) {
+                console.error(`Error fetching books:`, error);
             }
         }
-        await allUsers(limit, currentPage)
-    });
-
-    //--------------------------------------------- RENDER ---------------------------------------------
-
-    async function allUsers(limit: number, currentPage: number) {
-        const usersController = new UsersController(URL_DOMAIN);
-        try {
-            const response: BodyResponseGetUsers = await usersController.getAllUsers(token, limit, currentPage);
-            const users: DataUser[] = response.data;
-
-            cardsContainer.innerHTML = '';
-
-            for (const user of users) {
-                cardTemplate.renderUsers(user.id, user.name, user.lastName, user.email, user.role);
+    
+        allUsers(limit, currentPage);
+    } else {
+        // se definen los selectores del formulario y el contenedor de las cards para obtener los valores. 
+        const cardsContainer = document.querySelector('#cardsContainer') as HTMLDivElement;
+    
+        const form = document.querySelector('form') as HTMLFormElement;
+        const name = document.querySelector('#name') as HTMLInputElement;
+        const lastName = document.querySelector('#lastname') as HTMLInputElement;
+        const email = document.querySelector('#email') as HTMLInputElement;
+        const password = document.querySelector('#password') as HTMLInputElement;
+    
+        let role: string;
+    
+        let userId: undefined | string;
+    
+        const cardTemplate = new TemplateController(cardsContainer);
+    
+        prevPage.addEventListener("click", async (ev: Event) => {
+            if (currentPage > 1) {
+                currentPage--;
+                await allUsers(limit, currentPage);
             }
-        } catch (error) {
-            console.error(`Error fetching books:`, error);
+        });
+    
+        nextPage.addEventListener("click", async (ev: Event) => {
+            if (currentPage >=1){
+                currentPage++;
+                await allUsers(limit, currentPage);
+            }
+        });
+    
+        form.innerHTML = `<p>You are not allowed to make changes. Try getting logged with an admin account.</p>`
+    
+        cardsContainer.innerHTML = `<p>You are not allowed to see users data. Try getting logged with an admin account.</p>`
+    
+        //--------------------------------------------- RENDER ---------------------------------------------
+    
+        async function allUsers(limit: number, currentPage: number) {
+            const usersController = new UsersController(URL_DOMAIN);
+            try {
+                const response: BodyResponseGetUsers = await usersController.getAllUsers(token, limit, currentPage);
+                const users: DataUser[] = response.data;
+    
+                cardsContainer.innerHTML = '';
+    
+                for (const user of users) {
+                    cardTemplate.renderUsers(user.id, user.name, user.lastName, user.email, user.role);
+                }
+            } catch (error) {
+                console.error(`Error fetching books:`, error);
+            }
         }
+    
+        allUsers(limit, currentPage);
     }
-
-    allUsers(limit, currentPage);
 }
 
 //------------------------------------------------- addEventListener para el LOGOUT -------------------------------------------------
