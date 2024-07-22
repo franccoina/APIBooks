@@ -32,4 +32,6 @@ Don't worry about it! it is pretty easy and intuitive. However, for more informa
 
 -- GitHub Repository: https://github.com/stivenloaiza/nest-book-manager
 
+-- Explanation Video on Google Drive: https://drive.google.com/drive/folders/1-73bW-l9uQoX9PoFxM-XkGeJTl6ogGnI
+
 There, you will find the proper documentation to understand the procedure
